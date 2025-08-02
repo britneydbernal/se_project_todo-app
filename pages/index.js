@@ -8,7 +8,6 @@ const addTodoButton = document.querySelector(".button_action_add");
 const addTodoPopup = document.querySelector("#add-todo-popup");
 const addTodoForm = addTodoPopup.querySelector(".popup__form");
 const addTodoCloseBtn = addTodoPopup.querySelector(".popup__close");
-// const todoTemplate = document.querySelector("#todo-template"); ...REMOVE
 const todosList = document.querySelector(".todos__list");
 
 const openModal = (modal) => {
@@ -82,6 +81,7 @@ addTodoForm.addEventListener("submit", (evt) => {
   const values = { name, date, id };
   const todo = generateTodo(values);
   todosList.append(todo);
+  newTodoValidator.resetValidation();
   closeModal(addTodoPopup);
 });
 

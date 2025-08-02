@@ -27,10 +27,10 @@ class FormValidator {
       this._formEl.querySelectorAll(this._inputSelector)
     );
     const buttonElement = this._formEl.querySelector(
-      settings.submitButtonSelector
+      this._submitButtonSelector
     );
 
-    toggleButtonState(inputList, buttonElement, settings);
+    toggleButtonState(this._inputList, buttonElement);
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
@@ -41,10 +41,20 @@ class FormValidator {
   }
 
   enableValidation() {
-    this._formElement.addEventListener("submit", (evt) => {
+    this._formEl.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
     this._setEventListeners(this._formEl);
+  }
+
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      hideInputError(this._formEl, inputElement, this._settings);
+    });
+    const buttonElement = this._formEl.querySelector(
+      this._submitButtonSelector
+    );
+    toggleButtonState(this._inputList, buttonElement, this._settings);
   }
 }
 
