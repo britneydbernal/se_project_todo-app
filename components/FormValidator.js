@@ -7,18 +7,33 @@ class FormValidator {
     this._inputErrorClass = settings.inputErrorClass;
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._formEl = formEl;
+
+    this._buttonEl = this._formEl.querySelector(this._submitButtonSelector);
+  }
+
+  _showInputError(inputElement, errorMessage) {
+    const errorEl = this.formEl.querySelector(`.${inputEl.id}-error`);
+    inputEl.classList.add(this._inputErrorClass);
+    errorEl.textContent = errorMessage;
+    errorEl.classList.add(this._errorClass);
+  }
+
+  _hideInputError(inputEl) {
+    const errorEl = this._formEl.querySelector(`.${inputEl.id}-error`);
+    inputEl.classList.remove(this._inputErrorClass);
+    errorEl.textContent = "";
+    errorEl.classList.remove(this._errorClass);
   }
 
   _checkInputValidity(inputElement) {
     if (!inputElement.validity.valid) {
-      showInputError(
-        formElement,
+      this._showInputError(
+        this._formEl,
         inputElement,
-        inputElement.validationMessage,
-        settings
+        inputElement.validationMessage
       );
     } else {
-      hideInputError(formElement, inputElement, settings);
+      this._hideInputError(inputElement);
     }
   }
 
@@ -26,11 +41,6 @@ class FormValidator {
     this._inputList = Array.from(
       this._formEl.querySelectorAll(this._inputSelector)
     );
-    const buttonElement = this._formEl.querySelector(
-      this._submitButtonSelector
-    );
-
-    toggleButtonState(this._inputList, buttonElement);
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
@@ -38,6 +48,8 @@ class FormValidator {
         toggleButtonState(inputList, buttonElement, settings);
       });
     });
+
+    toggleButtonState(this._inputList, this._buttonEl);
   }
 
   enableValidation() {
@@ -48,12 +60,12 @@ class FormValidator {
   }
 
   resetValidation() {
+    this._formEl.reset();
+
     this._inputList.forEach((inputElement) => {
-      hideInputError(this._formEl, inputElement, this._settings);
+      this._hideInputError(inputElement);
     });
-    const buttonElement = this._formEl.querySelector(
-      this._submitButtonSelector
-    );
+
     toggleButtonState(this._inputList, buttonElement, this._settings);
   }
 }
