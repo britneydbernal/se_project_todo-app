@@ -66,7 +66,14 @@ class FormValidator {
       this._hideInputError(inputElement);
     });
 
-    toggleButtonState(this._inputList, buttonElement, this._settings);
+    this.toggleButtonState();
+  }
+
+  toggleButtonState() {
+    const isFormValid = this._inputList.every(
+      (inputElement) => inputElement.validity.valid
+    );
+    this._buttonElement.disabled = !isFormValid;
   }
 }
 
