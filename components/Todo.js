@@ -13,9 +13,13 @@ class Todo {
       this._todoCheckboxEl.checked = this._data.completed;
     });
 
+    this._handleCheck(this._data.completed.this._data.id);
+
     this._todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
     this._todoDeleteBtn.addEventListener("click", () => {
       this._todoElement.remove();
+
+      this._handleDelete(this._data.id);
     });
   }
 

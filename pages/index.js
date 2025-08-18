@@ -20,6 +20,8 @@ function handleCheck(completed) {
 }
 
 function handleDelete(completed) {
+  todoCounter.updateTotal(false);
+
   if (completed) {
     todoCounter.updateCompleted(false);
   }
@@ -33,10 +35,7 @@ const generateTodo = (data) => {
 
 const section = new Section({
   items: initialTodos,
-  renderer: (item) => {
-    const todoElement = generateTodo(item);
-    section.addItem(todoElement);
-  },
+  renderer: (item) => generateTodo(item),
   containerSelector: ".todos__list",
 });
 
@@ -59,6 +58,8 @@ const addTodoPopup = new PopupWithForm({
     const todo = generateTodo(values);
     section.addItem(todo);
 
+    todoCounter.updateTotal(true);
+
     newTodoValidator.resetValidation();
     addTodoPopup.close();
   },
@@ -71,21 +72,3 @@ addTodoButton.addEventListener("click", () => {
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
-
-//initialTodos.forEach((item) => {
-//const todo = generateTodo(item);
-//section.addItem(todo);
-//});
-
-//const popupWithForm = new PopupWithForm({
-//popupSelector: ".popup_type_form",
-//handleFormSubmit: (formData) => {
-//console.log(formData);
-//},
-//});
-// call section instances renderItems method
-
-//const renderTodo = (item) => {
-//const todo = generateTodo(item);
-//todosList.append(todo);
-//};
