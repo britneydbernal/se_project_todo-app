@@ -10,7 +10,7 @@ class Todo {
     this._todoCheckboxEl = this._todoElement.querySelector(".todo__completed");
     this._todoCheckboxEl.addEventListener("change", () => {
       this._data.completed = !this._data.completed;
-      this._handleCheck(this._data.completed.this._data.id);
+      this._handleCheck(this._data.completed);
       this._todoCheckboxEl.checked = this._data.completed;
     });
 
